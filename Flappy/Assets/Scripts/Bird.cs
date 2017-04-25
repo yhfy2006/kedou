@@ -34,5 +34,6 @@ public class Bird : MonoBehaviour {
 		// If the bird collides with something set it to dead...
 		isDead = true;
 		anim.SetTrigger ("Die");
+		GameControl.instance.BirdDied ();
 	}
 }
