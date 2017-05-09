@@ -8,11 +8,13 @@ public class NinjaHero : MonoBehaviour {
     private Rigidbody2D rb2d;
     private Animator anim;
 
+	private float baseY;
 	// Use this for initialization
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.freezeRotation = true;
         anim = GetComponent<Animator>();
+		baseY = rb2d.transform.position.y;
     }
 
     // Update is called once per frame
@@ -21,6 +23,12 @@ public class NinjaHero : MonoBehaviour {
             rb2d.velocity = Vector2.zero;
             rb2d.AddForce(new Vector2(0, upForce));
             anim.SetTrigger("Flip");
+			if (GameControl.instance.playerStartAction == false) {
+				GameControl.instance.playerStartAction = true;
+			}
         }
+		float offGroundY = rb2d.transform.position.y - baseY;
+		GameControl.instance.setPlayerOffGroundY (offGroundY);
+		GameControl.instance.setPlayerPosition (rb2d.transform.position);
 	}
 }
