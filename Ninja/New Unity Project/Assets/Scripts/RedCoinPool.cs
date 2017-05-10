@@ -19,7 +19,7 @@ public class RedCoinPool : MonoBehaviour {
 
 	private Vector2 objectPoolPostion;
 
-	private float highestPosition = 0f;
+	private float highestPosition = -5f;
 	// Use this for initialization
 
 	public int currentUsedCount = 0;
@@ -38,15 +38,16 @@ public class RedCoinPool : MonoBehaviour {
 	}
 
 	void Start () {
-		objectPoolPostion = new Vector2 (0, -5);
+		objectPoolPostion = new Vector2 (0, highestPosition);
 
 		GameObject tmpObj = (GameObject)Instantiate (redCoinPrefab, objectPoolPostion, Quaternion.identity);
 		columns.Enqueue(tmpObj);
+
 		for (int i = 1; i < poolSize; i++) {
 			float spawnXPosition = Random.Range(xMin, xMax);
-			float y = tmpObj.transform.position.y + yToNext;
-			objectPoolPostion = new Vector2 (spawnXPosition, y);
-			highestPosition = y;
+			highestPosition = highestPosition + yToNext;
+			objectPoolPostion = new Vector2 (spawnXPosition, highestPosition);
+
 			tmpObj = (GameObject)Instantiate(redCoinPrefab, objectPoolPostion, Quaternion.identity);
 			columns.Enqueue (tmpObj); 
 		}
