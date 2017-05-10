@@ -1,13 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SwipeManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/RedCoinPool.cs" Line="58" Column="45" />
+      <File FileName="Assets/Scripts/NinjaHero.cs" Line="46" Column="3" />
+      <File FileName="Assets/Scripts/SwipeManager.cs" Line="43" Column="2" />
+      <File FileName="Assets/Scripts/RedCoinPool.cs" Line="44" Column="3" />
       <File FileName="Assets/Scripts/RepeatingBackground.cs" Line="29" Column="16" />
-      <File FileName="Assets/Scripts/RedCoin.cs" Line="17" Column="1" />
-      <File FileName="Assets/Scripts/Camera.cs" Line="20" Column="109" />
+      <File FileName="Assets/Scripts/RedCoin.cs" Line="29" Column="1" />
+      <File FileName="Assets/Scripts/Camera.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/GameControl.cs" Line="12" Column="2" />
-      <File FileName="Assets/Scripts/NinjaHero.cs" Line="50" Column="72" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

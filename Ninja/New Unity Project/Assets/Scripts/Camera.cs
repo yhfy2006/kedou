@@ -20,8 +20,6 @@ public class Camera : MonoBehaviour {
 	void Update () {
 
 		if ((transform.position.y - player.transform.position.y) > 10.0f) {
-			float a = transform.position.y - player.transform.position.y;
-			//print ("===>" + a);
 			GameControl.instance.gameOver = true;
 		}
 

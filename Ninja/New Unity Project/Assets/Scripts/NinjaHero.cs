@@ -41,20 +41,17 @@ public class NinjaHero : MonoBehaviour {
 		GameControl.instance.setPlayerPosition (rb2d.transform.position);
 
 		//Input.GetTouch(0).deltaPosition.x < 0
-		//if (Input.GetKey("left")) {
-			
-		if (Input.GetTouch(0).deltaPosition.x < 0) {
-			Debug.Log("Pressed left click.");
-			rb2d.AddForce(new Vector2(-upForce, 0));
+		if (Input.GetKeyUp("left") ) {
+		//if(SwipeManager.IsSwipingLeft())	{
 			rb2d.velocity = Vector2.zero;
+			rb2d.AddForce(new Vector2(-upForce, 0));
 			removeGravity ();
 		}
-
-		//if (Input.GetKey("right")) {
-		if (Input.GetTouch(0).deltaPosition.x > 0) {
-			Debug.Log("Pressed right click.");
-			rb2d.AddForce(new Vector2(upForce, 0));
+		
+		if(Input.GetKeyUp("right") ){
+		//if(SwipeManager.IsSwipingRight()) {
 			rb2d.velocity = Vector2.zero;
+			rb2d.AddForce(new Vector2(upForce, 0));
 			removeGravity ();
 		}
 
@@ -64,9 +61,7 @@ public class NinjaHero : MonoBehaviour {
 		rb2d.velocity = Vector2.zero;
 		rb2d.AddForce(new Vector2(0, upForce));
 		anim.SetTrigger("Flip");
-		if (GameControl.instance.playerStartAction == false) {
-			GameControl.instance.playerStartAction = true;
-		}
+		Debug.Log ("applied force"+upForce);
 	}
 
 	public void removeGravity()

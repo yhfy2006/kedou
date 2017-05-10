@@ -8,11 +8,6 @@ public class RedCoin : MonoBehaviour {
 
 	public float targetTimeValue = 5.0f;
 
-	private float targetTime;
-
-	void Start(){
-		targetTime = targetTimeValue;
-	}
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.GetComponents<NinjaHero> () != null) {
@@ -20,7 +15,7 @@ public class RedCoin : MonoBehaviour {
 			NinjaHero.instance.applyUpForce ();
 
 			if (!used) {
-				RedCoinPool.instance.currentUsedCount += 1;
+				RedCoinPool.instance.UpdateCurrentUsedCount ();
 			}
 			used = true;
 		}

@@ -14,14 +14,12 @@ public class RedCoinPool : MonoBehaviour {
 
 	public float yToNext = 5.3f;
 
-	private GameObject[] columns;
-	private Vector2 objectPoolPostion = new Vector2 (-15f, -25f);
+	//private GameObject[] columns;
+	private Queue<GameObject> columns = new Queue<GameObject>();
 
-	private int currentColumn = 1;      
+	private Vector2 objectPoolPostion;
 
-	private float spawnXPosition = 10f;
-
-	private int highestPositionIndex = 0;
+	private float highestPosition = 0f;
 	// Use this for initialization
 
 	public int currentUsedCount = 0;
@@ -40,40 +38,40 @@ public class RedCoinPool : MonoBehaviour {
 	}
 
 	void Start () {
-		columns = new GameObject[poolSize];
-
 		objectPoolPostion = new Vector2 (0, -5);
-		columns [0] = (GameObject)Instantiate (redCoinPrefab, objectPoolPostion, Quaternion.identity);
+
+		GameObject tmpObj = (GameObject)Instantiate (redCoinPrefab, objectPoolPostion, Quaternion.identity);
+		columns.Enqueue(tmpObj);
 		for (int i = 1; i < poolSize; i++) {
 			float spawnXPosition = Random.Range(xMin, xMax);
-			float y = columns [i - 1].transform.position.y + yToNext;
+			float y = tmpObj.transform.position.y + yToNext;
 			objectPoolPostion = new Vector2 (spawnXPosition, y);
-			columns[i] = (GameObject)Instantiate(redCoinPrefab, objectPoolPostion, Quaternion.identity);
+			highestPosition = y;
+			tmpObj = (GameObject)Instantiate(redCoinPrefab, objectPoolPostion, Quaternion.identity);
+			columns.Enqueue (tmpObj); 
 		}
-		highestPositionIndex = poolSize - 1;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		//print ("current U C:" + currentUsedCount);
+
+	}
+
+	public void UpdateCurrentUsedCount()
+	{
+		currentUsedCount += 1;
 		if (currentUsedCount != 0 && currentUsedCount % coinMoveUpFrequency == 0) {
+			
 			moveLastOneToTop ();
 		}
 	}
 
 	void moveLastOneToTop(){
-		for (int i = 0; i < poolSize; i++) {
-			GameObject currentRedCoin = columns [i];
-
-			if (currentRedCoin.GetComponent<RedCoin> ().used == true) {
-				float spawnXPosition = Random.Range(xMin, xMax);
-				GameObject highestRedCoin = columns [highestPositionIndex];
-				columns[i].transform.position = new Vector2(spawnXPosition, highestRedCoin.transform.position.y + yToNext);
-
-				highestPositionIndex = i;
-				currentRedCoin.GetComponent<RedCoin> ().used = false;
-			}
-			break;
-		}
+		Debug.Log ("herererer===>");
+		GameObject lowest = columns.Dequeue ();
+		float spawnXPosition = Random.Range(xMin, xMax);
+		highestPosition = highestPosition + yToNext;
+		lowest.transform.position = new Vector2(spawnXPosition, highestPosition);
+		columns.Enqueue (lowest);
 	}
 }
