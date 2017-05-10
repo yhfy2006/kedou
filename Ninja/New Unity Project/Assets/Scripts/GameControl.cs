@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour {
 
@@ -9,6 +10,9 @@ public class GameControl : MonoBehaviour {
 	private Vector3 playerPosition;
 	private float playerOffGroundY;
 	public  bool playerStartAction = false;
+
+	public bool gameOver = false;
+
 
 	// Use this for initialization
 	void Awake () {
@@ -26,7 +30,15 @@ public class GameControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (gameOver && Input.GetMouseButtonDown (0)) {
+			resetGame ();
+		}
+	}
+
+	public void resetGame()
+	{
+		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
+		gameOver = false;
 	}
 
 	public void setPlayerOffGroundY(float y)
@@ -42,12 +54,13 @@ public class GameControl : MonoBehaviour {
 	public void setPlayerPosition(Vector3 position)
 	{
 		playerPosition = position;
-		print (position);
+		//print (position);
 	}
 
 	public Vector3 getPlayerHeight()
 	{
 		return playerPosition;
 	}
+		
 
 }

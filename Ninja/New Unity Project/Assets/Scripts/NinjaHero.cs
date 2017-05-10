@@ -36,16 +36,23 @@ public class NinjaHero : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		float offGroundY = rb2d.transform.position.y - baseY;
+		//print ("off Ground" + offGroundY);
 		GameControl.instance.setPlayerOffGroundY (offGroundY);
 		GameControl.instance.setPlayerPosition (rb2d.transform.position);
 
-		if (Input.GetMouseButtonUp (0)) {
+		//Input.GetTouch(0).deltaPosition.x < 0
+		//if (Input.GetKey("left")) {
+			
+		if (Input.GetTouch(0).deltaPosition.x < 0) {
+			Debug.Log("Pressed left click.");
 			rb2d.AddForce(new Vector2(-upForce, 0));
 			rb2d.velocity = Vector2.zero;
 			removeGravity ();
 		}
 
-		if (Input.GetMouseButtonUp (1)) {
+		//if (Input.GetKey("right")) {
+		if (Input.GetTouch(0).deltaPosition.x > 0) {
+			Debug.Log("Pressed right click.");
 			rb2d.AddForce(new Vector2(upForce, 0));
 			rb2d.velocity = Vector2.zero;
 			removeGravity ();
@@ -70,5 +77,10 @@ public class NinjaHero : MonoBehaviour {
 	public void resumeGravity()
 	{
 		rb2d.gravityScale = gravityScale;
+	}
+
+	public void resetVelocity()
+	{
+		rb2d.velocity = Vector2.zero;
 	}
 }

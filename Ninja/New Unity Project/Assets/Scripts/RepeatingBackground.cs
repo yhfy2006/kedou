@@ -15,7 +15,6 @@ public class RepeatingBackground : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		print ("background: " + transform.position);
 		if (GameControl.instance.getPlayerOffGroundY()> transform.position.y + groundVerticalLength + 5) {
 			RepositionBackground ();
 		}
@@ -24,6 +23,14 @@ public class RepeatingBackground : MonoBehaviour {
 	private void RepositionBackground(){
 		Vector2 groundOffset = new Vector2 (0, groundVerticalLength * 2f);
 		transform.position = (Vector2)transform.position + groundOffset;
+	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		//print ("hi");
+		if (other.GetComponents<NinjaHero> () != null) {
+			NinjaHero.instance.resetVelocity ();
+			NinjaHero.instance.resumeGravity ();
+		}
 	}
 }
 
