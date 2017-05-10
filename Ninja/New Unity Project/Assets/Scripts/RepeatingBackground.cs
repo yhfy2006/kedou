@@ -16,10 +16,9 @@ public class RepeatingBackground : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		print ("background: " + transform.position);
-		if (GameControl.instance.getPlayerOffGroundY() % groundVerticalLength == 0) {
-		
+		if (GameControl.instance.getPlayerOffGroundY()> transform.position.y + groundVerticalLength + 5) {
+			RepositionBackground ();
 		}
-
 	}
 
 	private void RepositionBackground(){
