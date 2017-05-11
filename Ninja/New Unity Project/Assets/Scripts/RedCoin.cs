@@ -11,6 +11,8 @@ public class RedCoin : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.GetComponents<NinjaHero> () != null) {
+			NinjaHero.instance.ninjaFlyOn (false);
+
 			NinjaHero.instance.resumeGravity ();
 			NinjaHero.instance.applyUpForce ();
 
@@ -19,5 +21,7 @@ public class RedCoin : MonoBehaviour {
 			}
 			used = true;
 		}
+
+		NinjaHero.instance.adjustFacing ();
 	}
 }

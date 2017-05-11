@@ -11,6 +11,7 @@ public class RedCoinPool : MonoBehaviour {
 
 	public float xMin = -4.5f;
 	public float xMax = 4.5f;
+	public float xGapMin = 3.0f;
 
 	public float yToNext = 5.3f;
 
@@ -19,7 +20,8 @@ public class RedCoinPool : MonoBehaviour {
 
 	private Vector2 objectPoolPostion;
 
-	private float highestPosition = -5f;
+	private float highestPositionY = -5f;
+	private float highestPositionX = 0f;
 	// Use this for initialization
 
 	public int currentUsedCount = 0;
@@ -38,17 +40,22 @@ public class RedCoinPool : MonoBehaviour {
 	}
 
 	void Start () {
-		objectPoolPostion = new Vector2 (0, highestPosition);
+		objectPoolPostion = new Vector2 (highestPositionX, highestPositionY);
+		highestPositionY -= yToNext;
 
-		GameObject tmpObj = (GameObject)Instantiate (redCoinPrefab, objectPoolPostion, Quaternion.identity);
-		columns.Enqueue(tmpObj);
+		for (int i = 0; i < poolSize; i++) {
+			float spawnXPosition = getXGap (highestPositionX);
 
-		for (int i = 1; i < poolSize; i++) {
-			float spawnXPosition = Random.Range(xMin, xMax);
-			highestPosition = highestPosition + yToNext;
-			objectPoolPostion = new Vector2 (spawnXPosition, highestPosition);
+			if (i == 0) {
+				spawnXPosition = 0;
+			}
 
-			tmpObj = (GameObject)Instantiate(redCoinPrefab, objectPoolPostion, Quaternion.identity);
+			highestPositionX = spawnXPosition;
+
+			highestPositionY = highestPositionY + yToNext;
+			objectPoolPostion = new Vector2 (spawnXPosition, highestPositionY);
+
+			GameObject tmpObj = (GameObject)Instantiate(redCoinPrefab, objectPoolPostion, Quaternion.identity);
 			columns.Enqueue (tmpObj); 
 		}
 	}
@@ -58,21 +65,35 @@ public class RedCoinPool : MonoBehaviour {
 
 	}
 
-	public void UpdateCurrentUsedCount()
+	private float getXGap(float lastXposition)
 	{
-		currentUsedCount += 1;
-		if (currentUsedCount != 0 && currentUsedCount % coinMoveUpFrequency == 0) {
-			
-			moveLastOneToTop ();
+		float xgap = 0;
+		while (true) {
+			 xgap = Random.Range(xMin, xMax);
+			if (Mathf.Abs(xgap-lastXposition) > xGapMin) {
+				return xgap;
+			}
 		}
 	}
 
+	public void UpdateCurrentUsedCount()
+	{
+		currentUsedCount += 1;
+		Debug.Log ("highest = " + highestPositionY + "Q size "+ columns.Count);
+		if (currentUsedCount > 2) {
+			moveLastOneToTop ();
+		}
+
+	}
+
 	void moveLastOneToTop(){
-		Debug.Log ("herererer===>");
 		GameObject lowest = columns.Dequeue ();
-		float spawnXPosition = Random.Range(xMin, xMax);
-		highestPosition = highestPosition + yToNext;
-		lowest.transform.position = new Vector2(spawnXPosition, highestPosition);
+		float spawnXPosition = getXGap (highestPositionX);
+
+		highestPositionX = spawnXPosition;
+		highestPositionY = highestPositionY + yToNext;
+		lowest.transform.position = new Vector2(spawnXPosition, highestPositionY);
+		lowest.GetComponent<RedCoin> ().used = false;
 		columns.Enqueue (lowest);
 	}
 }

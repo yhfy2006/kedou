@@ -14,6 +14,8 @@ public class NinjaHero : MonoBehaviour {
 
 	public static NinjaHero instance;
 
+	private bool facingRight = true;
+
 
 	// Use this for initialization
 	void Awake () {
@@ -45,15 +47,19 @@ public class NinjaHero : MonoBehaviour {
 		//if(SwipeManager.IsSwipingLeft())	{
 			rb2d.velocity = Vector2.zero;
 			rb2d.AddForce(new Vector2(-upForce, 0));
+			ninjaFlyOn (true);
 			removeGravity ();
 		}
-		
+
 		if(Input.GetKeyUp("right") ){
 		//if(SwipeManager.IsSwipingRight()) {
 			rb2d.velocity = Vector2.zero;
 			rb2d.AddForce(new Vector2(upForce, 0));
+			ninjaFlyOn (true);
 			removeGravity ();
 		}
+
+
 
 	}
 
@@ -61,7 +67,28 @@ public class NinjaHero : MonoBehaviour {
 		rb2d.velocity = Vector2.zero;
 		rb2d.AddForce(new Vector2(0, upForce));
 		anim.SetTrigger("Flip");
-		Debug.Log ("applied force"+upForce);
+		//Debug.Log ("applied force"+upForce);
+	}
+
+
+
+	public void adjustFacing(){
+		if (transform.position.x > 0 && facingRight) {
+
+			transform.localRotation = Quaternion.Euler (0, 180, 0);
+			facingRight = false;
+		}
+
+		if (transform.position.x <= 0 && !facingRight) {
+			transform.localRotation = Quaternion.Euler (0, 0, 0);
+			facingRight = true;
+		}
+	}
+
+
+	public void ninjaFlyOn(bool on)
+	{
+		anim.SetBool ("Fly", on);
 	}
 
 	public void removeGravity()
