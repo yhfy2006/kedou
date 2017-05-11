@@ -43,16 +43,16 @@ public class NinjaHero : MonoBehaviour {
 		GameControl.instance.setPlayerPosition (rb2d.transform.position);
 
 		//Input.GetTouch(0).deltaPosition.x < 0
-		if (Input.GetKeyUp("left") ) {
-		//if(SwipeManager.IsSwipingLeft())	{
+		//if (Input.GetKeyUp("left") ) {
+		if(SwipeManager.IsSwipingLeft())	{
 			rb2d.velocity = Vector2.zero;
 			rb2d.AddForce(new Vector2(-upForce, 0));
 			ninjaFlyOn (true);
 			removeGravity ();
 		}
 
-		if(Input.GetKeyUp("right") ){
-		//if(SwipeManager.IsSwipingRight()) {
+		//if(Input.GetKeyUp("right") ){
+		if(SwipeManager.IsSwipingRight()) {
 			rb2d.velocity = Vector2.zero;
 			rb2d.AddForce(new Vector2(upForce, 0));
 			ninjaFlyOn (true);
